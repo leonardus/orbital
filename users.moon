@@ -29,6 +29,12 @@ module.getUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
 	module.connectedUsers["#{remoteAddress}/#{remotePort}"]
 	
+module.userFromNick = (nick) ->
+	for _, user in pairs module.connectedUsers do
+		if user.nick == nick
+			return user
+	nil
+	
 module.removeUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
 	module.connectedUsers["#{remoteAddress}/#{remotePort}"].client\close!
