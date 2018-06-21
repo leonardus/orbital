@@ -84,7 +84,7 @@ commands =
 		for _, requestedChannel in ipairs channelList do
 			-- ensure the channel name is valid
 			chantype = requestedChannel\sub 1,1
-			if chantype != "#" and chantype != "&"
+			if chantype != "#"
 				user\send numerics.NOSUCHCHANNEL user, requestedChannel
 				return
 			

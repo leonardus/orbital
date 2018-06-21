@@ -24,7 +24,7 @@ return {
 		version = config.version
 		":#{source} 004 #{user.userText} #{servername} #{version} #{usermodes} #{channelmodes}"
 	RPL_ISUPPORT: (user) ->
-		":#{source} 005 #{user.userText} CASEMAPPING=ascii CHANLIMIT=#&: CHANNELLEN=50 CHANTYPES=#& ELIST=MU HOSTLEN=64 KICKLEN=255 MAXLIST=b:127 NICKLEN=20 PREFIX=(ov)@+ STATUSMSG=@+ TOPICLEN=255 USERLEN=20 :are supported by this server"
+		":#{source} 005 #{user.userText} CASEMAPPING=ascii CHANLIMIT=#: CHANNELLEN=50 CHANTYPES=# ELIST=MU HOSTLEN=64 KICKLEN=255 MAXLIST=b:127 NICKLEN=20 PREFIX=(ov)@+ STATUSMSG=@+ TOPICLEN=255 USERLEN=20 :are supported by this server"
 	RPL_TOPIC: (user, channel) ->
 		":#{source} 332 #{user.userText} #{channel.name} :#{channel.topic}"
 	RPL_NAMREPLY: (user, channel) ->
