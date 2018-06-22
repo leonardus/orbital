@@ -82,12 +82,16 @@ commands =
 			return
 
 		for _, requestedChannel in ipairs channelList do
+			-- if the user is already in the channel, do nothing
+			for _, channel in pairs user.channels do
+				if channel.name == requestedChannel
+					return
+			
 			-- ensure the channel name is valid
 			chantype = requestedChannel\sub 1,1
 			if chantype != "#"
 				user\send numerics.NOSUCHCHANNEL user, requestedChannel
 				return
-			
 			
 			channel = channels.getChannel requestedChannel
 			
