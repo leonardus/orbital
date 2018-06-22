@@ -67,19 +67,19 @@ commands =
 			completeRegistration user
 
 	"CAP": (line, user) -> -- needs to be implemented
-		subcommand = line.args[1]
-		
-		unless subcommand
+		unless #line.args >= 1
 			user\send numerics.ERR_NEEDMOREPARAMS user, "CAP"
 			return
+		
+		subcommand = line.args[1]
 		
 		
 	"JOIN": (line, user) ->
-		channelList = line.args
-		
-		unless channelList[1]
+		unless #line.args >= 1
 			user\send numerics.ERR_NEEDMOREPARAMS user, "CAP"
 			return
+		
+		channelList = line.args
 
 		for _, requestedChannel in ipairs channelList do
 			-- if the user is already in the channel, do nothing
