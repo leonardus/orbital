@@ -17,4 +17,14 @@ module.getChannel = (name) ->
 	
 	module.activeChannels[name]
 
+module.channelExists = (name) ->
+	exists = false
+
+	for _, channel in pairs(module.activeChannels) do
+		if channel.name\lower! == name\lower!
+			exists = true
+			break
+
+	exists
+
 return module
