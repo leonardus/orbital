@@ -24,6 +24,12 @@ class User
 
 	prefix: => ":#{@nick}!~#{@username}@#{@hostname}"
 
+	isInChannel: (name) =>
+		for _, channel in pairs @channels do
+			if channel.name == name
+				return true
+		return false
+
 module.createUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
 	module.connectedUsers["#{remoteAddress}/#{remotePort}"] = User client
