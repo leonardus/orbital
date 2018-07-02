@@ -38,6 +38,8 @@ return {
 			table.insert data, "#{base}#{prefix}#{userInChannel.nick}"
 		
 		data
+	ERR_NOSUCHNICK: (user, nick) ->
+		":#{source} 401 #{user.userText} #{nick} :No such nick/channel"
 	ERR_NOSUCHCHANNEL: (user, channel) ->
 		":#{source} 403 #{user.userText} #{channel} :No such channel"
 	ERR_INVALIDCAPCMD: (command) ->
