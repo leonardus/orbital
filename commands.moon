@@ -116,7 +116,40 @@ commands =
 				
 			-- send NAMES reply
 			user\send numerics.RPL_NAMREPLY user, channel
+	
+	"PRIVMSG": (line, user) ->
+		target = line.args[1]
+		message = line.args[2]
+
+		unless target
+			user\send ERR_NORECIPIENT user
+			return
+
+		unless message
+			user\send numerics.NOTEXTTOSEND user
+			return
+
+		-- make sure user/channel exists
+		unless channels.channelExists(target) or users.userFromNick(target)
+			user\send numerics.ERR_NOSUCHNICK user, target
+			return
 		
+		-- make sure the user is in the channel
+		if target\sub(1,1) == "#" and not user\isInChannel target
+			user\send numerics.ERR_CANNOTSENDTOCHAN user, target
+			return
+
+		-- send the message
+		textToSend = "#{user\prefix!} PRIVMSG #{target} :#{message}"
+		if target\sub(1,1) == "#"
+			channel = channels.getChannel target
+			for _, userInChannel in pairs channel.users do
+				if userInChannel != user
+					userInChannel\send textToSend
+		else
+			user = users.userFromNick target
+			user\send textToSend
+
 return (user, line) ->
 	command = line.command or line.numeric
 	if commands[command]
