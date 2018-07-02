@@ -22,6 +22,8 @@ class User
 			@client\send "#{data}\r\n"
 			print "-> #{data}"
 
+	prefix: => ":#{@nick}!~#{@username}@#{@hostname}"
+
 module.createUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
 	module.connectedUsers["#{remoteAddress}/#{remotePort}"] = User client

@@ -107,11 +107,8 @@ commands =
 			user.channelPrefixes[requestedChannel] = ""
 			
 			-- send the JOIN message to all the users in the channel
-			nick = user.nick
-			username = user.userText
-			host = user.hostname
 			for _, channelUser in pairs channel.users do
-				channelUser\send ":#{nick}!~#{username}@#{host} JOIN #{requestedChannel}"
+				channelUser\send "#{user\prefix!} JOIN #{requestedChannel}"
 				
 			-- send the channel topic
 			if channel.topic
