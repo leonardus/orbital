@@ -40,7 +40,7 @@ module.getUser = (client) ->
 	
 module.userFromNick = (nick) ->
 	for _, user in pairs module.connectedUsers do
-		if user.nick == nick
+		if user.nick\lower! == nick\lower!
 			return user
 	nil
 	
