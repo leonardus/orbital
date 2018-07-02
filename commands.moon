@@ -4,7 +4,13 @@ numerics = require "numerics"
 config = require "config"
 
 completeRegistration = (user) ->
+	-- set the user's hostname
+	ip = user.client\getpeername!
+	hostname = socket.dns.tohostname(ip)
+	user.hostname = hostname or ip -- rDNS, ip as fallback
+
 	user.registered = true
+
 	user\send numerics.RPL_WELCOME user
 	user\send numerics.RPL_YOURHOST user
 	user\send numerics.RPL_CREATED user
@@ -103,7 +109,7 @@ commands =
 			-- send the JOIN message to all the users in the channel
 			nick = user.nick
 			username = user.userText
-			host = user.client\getpeername!
+			host = user.hostname
 			for _, channelUser in pairs channel.users do
 				channelUser\send ":#{nick}!~#{username}@#{host} JOIN #{requestedChannel}"
 				

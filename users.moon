@@ -7,6 +7,7 @@ class User
 		@registered = false
 		@nick = nil
 		@username = nil
+		@hostname = ""
 		@userText = "*" -- "<user>" text given to the numeric
 		@client = client
 		@channels = {}
