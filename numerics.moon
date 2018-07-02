@@ -39,7 +39,7 @@ return {
 		
 		data
 	ERR_NOSUCHCHANNEL: (user, channel) ->
-		":#{source} 404 #{user.userText} #{channel} :No such channel"
+		":#{source} 403 #{user.userText} #{channel} :No such channel"
 	ERR_INVALIDCAPCMD: (command) ->
 		":#{source} 410 * #{command} :Invalid CAP command"
 	ERR_NOMOTD: (user) ->
