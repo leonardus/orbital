@@ -36,13 +36,13 @@ module.createUser = (client) ->
 	
 module.getUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
-	module.connectedUsers["#{remoteAddress}/#{remotePort}"]
+	return module.connectedUsers["#{remoteAddress}/#{remotePort}"]
 	
 module.userFromNick = (nick) ->
 	for _, user in pairs module.connectedUsers do
 		if user.nick\lower! == nick\lower!
 			return user
-	nil
+	return nil
 	
 module.removeUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
