@@ -8,7 +8,7 @@ class User
 		@nick = nil
 		@username = nil
 		@hostname = ""
-		@userText = "*" -- "<user>" text given to the numeric
+		@clientText = "*" -- "<client>" text given to the numeric
 		@client = client
 		@channels = {}
 		@channelPrefixes = {}

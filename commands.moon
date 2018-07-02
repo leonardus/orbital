@@ -43,6 +43,7 @@ commands =
 			return
 			
 		user.nick = requestedNick
+		user.clientText = requestedNick
 		if user.username and not user.registered
 			completeRegistration user
 		
@@ -68,7 +69,6 @@ commands =
 			
 		-- grant the user the username and mark the user as registered
 		user.username = requestedUsername
-		user.userText = requestedUsername
 		if user.nick
 			completeRegistration user
 
