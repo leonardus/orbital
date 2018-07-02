@@ -26,7 +26,7 @@ class User
 
 	isInChannel: (name) =>
 		for _, channel in pairs @channels do
-			if channel.name == name
+			if channel.name\lower! == name\lower!
 				return true
 		return false
 
