@@ -11,6 +11,7 @@ class Channel
 		@topic = text
 
 module.getChannel = (name) ->
+	name = name\lower!
 	-- create the channel if it does not exist
 	unless module.activeChannels[name]
 		module.activeChannels[name] = Channel name
