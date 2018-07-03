@@ -104,7 +104,14 @@ commands =
 			table.insert user.channels, channel
 			table.insert channel.users, user
 			
-			user.channelPrefixes[requestedChannel] = ""
+			-- set the user's channel prefix
+			local prefix
+			if #channel.users == 1 -- first user in channel
+				channel.modes.o[user\fullhost!] = true
+				prefix = "@"
+			else
+				prefix = ""
+			user.channelPrefixes[requestedChannel] = prefix
 			
 			-- send the JOIN message to all the users in the channel
 			for _, channelUser in pairs channel.users do
