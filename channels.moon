@@ -6,7 +6,26 @@ class Channel
 		@name = name
 		@topic = nil
 		@users = {}
-		
+		@modes = {
+			-- channel modes
+			"b": {} -- ban
+			"e": {} -- exception
+			"I": {} -- invite-exception
+			"l": false -- client limit
+			"i": false -- invite-only
+			"k": false -- key
+			"m": false -- moderated
+			"s": false -- secret
+			"t": true -- protected topic
+			"n": true -- no external messages
+			
+			-- channel membership prefixes
+			"o": {} -- operator
+			"v": {} -- voice
+		}
+		@clientLimit = -1 -- +l
+		@key = "" -- +k
+
 	setTopic: (text) =>
 		@topic = text
 
