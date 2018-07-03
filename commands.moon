@@ -108,7 +108,7 @@ commands =
 			
 			-- send the JOIN message to all the users in the channel
 			for _, channelUser in pairs channel.users do
-				channelUser\send ":#{user\prefix!} JOIN #{requestedChannel}"
+				channelUser\send ":#{user\fullhost!} JOIN #{requestedChannel}"
 				
 			-- send the channel topic
 			if channel.topic
@@ -140,7 +140,7 @@ commands =
 			return
 
 		-- send the message
-		textToSend = ":#{user\prefix!} PRIVMSG #{target} :#{message}"
+		textToSend = ":#{user\fullhost!} PRIVMSG #{target} :#{message}"
 		if target\sub(1,1) == "#"
 			channel = channels.getChannel target
 			for _, userInChannel in pairs channel.users do
