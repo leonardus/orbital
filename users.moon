@@ -22,7 +22,7 @@ class User
 			@client\send "#{data}\r\n"
 			print "-> #{data}"
 
-	prefix: => ":#{@nick}!~#{@username}@#{@hostname}"
+	fullhost: => "#{@nick}!~#{@username}@#{@hostname}"
 
 	isInChannel: (name) =>
 		for _, channel in pairs @channels do
