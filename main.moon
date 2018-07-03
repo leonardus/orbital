@@ -27,7 +27,7 @@ clientReadable = (client) ->
 		table.remove clients, clients[client]
 		return
 		
-	line = parse data
+	line = parse.parseMessage data
 	if line
 		if line.command or line.numeric
 			commands users.getUser(client), line
