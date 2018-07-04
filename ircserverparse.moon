@@ -56,12 +56,21 @@ fullhostPattern = re.compile [[
 	{:host: {[^ ]+} :} |}
 ]]
 
+explodeCommas = re.compile [[
+	list <- {| arg (',' arg)* |}
+	arg <- {: [^ ,]+ :}
+]]
+
 parseModule.parseMessage = (line) ->
 	parsed = re.match line, messagePattern
 	return parsed
 
 parseModule.parseFullhost = (line) ->
 	parsed = re.match line, fullhostPattern
+	return parsed
+
+parseModule.explodeCommas = (line) ->
+	parsed = re.match line, explodeCommas
 	return parsed
 
 return parseModule
