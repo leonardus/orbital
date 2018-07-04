@@ -50,11 +50,10 @@ messagePattern = re.compile [[
 ]]
 
 fullhostPattern = re.compile [[
-	prefix <- ':' (
+	fullhost <- {|
 	{:nick: {[^ !]+} :} '!'
-	{:user: {[^ @]+} :} '@'
-	{:host: {[^ ]+} :} /
-	{:nick: {[^ ]+} :})
+	{:user: '~'? {[^ @]+} :} '@'
+	{:host: {[^ ]+} :} |}
 ]]
 
 parseModule.parseMessage = (line) ->
