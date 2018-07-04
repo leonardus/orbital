@@ -17,8 +17,6 @@ parseModule.matchesWithWildcard = (wildcard, actual) ->
 		if wildcardIndex > 1 and wildcard\sub(wildcardIndex-1, wildcardIndex-1) == "\\"
 			isEscaped = true
 
-		print wildcardChar, actualChar, isEscaped
-
 		if (wildcardChar == "?" and not isEscaped) or actualChar == wildcardChar or wildcardChar == "\\"
 			if ast
 				ast = false
