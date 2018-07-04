@@ -2,6 +2,7 @@ users = require "users"
 channels = require "channels"
 numerics = require "numerics"
 config = require "config"
+parse = require "ircserverparse"
 
 completeRegistration = (user) ->
 	-- set the user's hostname
@@ -85,23 +86,22 @@ commands =
 			user\send numerics.ERR_NEEDMOREPARAMS user, "CAP"
 			return
 		
-		channelList = line.args
+		channelList = parse.explodeCommas(line.args[1])
 
 		for _, requestedChannel in ipairs channelList do
 			-- if the user is already in the channel, do nothing
-			for _, channel in pairs user.channels do
-				if channel.name == requestedChannel
-					return
+			if user.channels[requestedChannel\lower!]
+				continue
 			
 			-- ensure the channel name is valid
 			chantype = requestedChannel\sub 1,1
 			if chantype != "#"
 				user\send numerics.NOSUCHCHANNEL user, requestedChannel
-				return
+				continue
 			
 			channel, isNewChannel = channels.getChannel requestedChannel
 			
-			table.insert user.channels, channel
+			user.channels[channel.name] = channel
 			table.insert channel.users, user
 			
 			-- set the user's channel prefix
