@@ -32,10 +32,12 @@ class Channel
 module.getChannel = (name) ->
 	name = name\lower!
 	-- create the channel if it does not exist
+	isNewChannel = false
 	unless module.activeChannels[name]
 		module.activeChannels[name] = Channel name
+		isNewChannel = true
 	
-	module.activeChannels[name]
+	module.activeChannels[name], isNewChannel
 
 module.channelExists = (name) ->
 	for _, channel in pairs(module.activeChannels) do

@@ -99,14 +99,14 @@ commands =
 				user\send numerics.NOSUCHCHANNEL user, requestedChannel
 				return
 			
-			channel = channels.getChannel requestedChannel
+			channel, isNewChannel = channels.getChannel requestedChannel
 			
 			table.insert user.channels, channel
 			table.insert channel.users, user
 			
 			-- set the user's channel prefix
 			local prefix
-			if #channel.users == 1 -- first user in channel
+			if isNewChannel -- first user in channel
 				channel.modes.o[user\fullhost!] = true
 				prefix = "@"
 			else
