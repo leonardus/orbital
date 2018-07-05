@@ -123,6 +123,41 @@ commands =
 				
 			-- send NAMES reply
 			user\send numerics.RPL_NAMREPLY user, channel
+		
+	"PART": (line, user) ->
+		unless #line.args >= 1
+			user\send numerics.ERR_NEEDMOREPARAMS user, "PART"
+			return
+		
+		channelList = parse.explodeCommas(line.args[1])
+
+		for _, requestedChannel in ipairs channelList do
+			channel = user.channels[requestedChannel\lower!]
+			unless channel
+				user\send numerics.ERR_NOTONCHANNEL user, requestedChannel
+				continue
+			
+			-- ensure the channel name is valid
+			chantype = requestedChannel\sub 1,1
+			if chantype != "#"
+				user\send numerics.NOSUCHCHANNEL user, requestedChannel
+				continue
+			
+			-- send the PART message to all the users in the channel
+			for _, channelUser in pairs channel.users do
+				channelUser\send ":#{user\fullhost!} PART #{requestedChannel}"
+			
+			-- remove the channel from the user's list of channels
+			user.channels[channel.name] = nil
+
+			-- remove the user from the channel's list of users
+			for k, channelUser in pairs channel.users do
+				if channelUser == user
+					channel.users[k] = nil
+
+			-- delete the channel if it is empty
+			if #channel.users < 1
+				channel\destroy!
 	
 	"PRIVMSG": (line, user) ->
 		target = line.args[1]

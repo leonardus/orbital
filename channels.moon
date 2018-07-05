@@ -29,6 +29,9 @@ class Channel
 	setTopic: (text) =>
 		@topic = text
 
+	destroy: =>
+		module.activeChannels[@name] = nil
+
 module.getChannel = (name) ->
 	name = name\lower!
 	-- create the channel if it does not exist
