@@ -29,6 +29,10 @@ class Channel
 	setTopic: (text) =>
 		@topic = text
 
+	sendAll: (text) =>
+		for _, channelUser in pairs @users do
+			channelUser\send text
+
 	destroy: =>
 		module.activeChannels[@name] = nil
 

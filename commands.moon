@@ -143,9 +143,8 @@ commands =
 				user\send numerics.NOSUCHCHANNEL user, requestedChannel
 				continue
 			
-			-- send the PART message to all the users in the channel
-			for _, channelUser in pairs channel.users do
-				channelUser\send ":#{user\fullhost!} PART #{requestedChannel}"
+			-- send the PART message to all users in the channel
+			channel\sendAll ":#{user\fullhost!} PART #{channel.name}"
 			
 			-- remove the channel from the user's list of channels
 			user.channels[channel.name] = nil
