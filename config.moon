@@ -1,5 +1,5 @@
 return {
-	version: "eclipseircd-pre"
+	version: "orbital-pre"
 	
 	serverName: "localnet"
 	source: "localhost"
