@@ -83,7 +83,7 @@ commands =
 		
 	"JOIN": (line, user) ->
 		unless #line.args >= 1
-			user\send numerics.ERR_NEEDMOREPARAMS user, "CAP"
+			user\send numerics.ERR_NEEDMOREPARAMS user, "JOIN"
 			return
 		
 		channelList = parse.explodeCommas(line.args[1])
