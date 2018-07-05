@@ -142,21 +142,12 @@ commands =
 			if chantype != "#"
 				user\send numerics.NOSUCHCHANNEL user, requestedChannel
 				continue
-			
+				
 			-- send the PART message to all users in the channel
 			channel\sendAll ":#{user\fullhost!} PART #{channel.name}"
-			
-			-- remove the channel from the user's list of channels
-			user.channels[channel.name] = nil
 
-			-- remove the user from the channel's list of users
-			for k, channelUser in pairs channel.users do
-				if channelUser == user
-					channel.users[k] = nil
-
-			-- delete the channel if it is empty
-			if #channel.users < 1
-				channel\destroy!
+			-- remove the user from the channel
+			channel\removeUser user
 	
 	"PRIVMSG": (line, user) ->
 		target = line.args[1]

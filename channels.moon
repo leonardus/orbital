@@ -33,6 +33,19 @@ class Channel
 		for _, channelUser in pairs @users do
 			channelUser\send text
 
+	removeUser: (user) =>
+		-- remove the channel from the user's list of channels
+		user.channels[@name] = nil
+
+		-- remove the user from the channel's list of users
+		for k, channelUser in pairs @users do
+			if channelUser == user
+				@users[k] = nil
+
+		-- delete the channel if it is empty
+		if #@users < 1
+			@destroy!
+	
 	destroy: =>
 		module.activeChannels[@name] = nil
 
