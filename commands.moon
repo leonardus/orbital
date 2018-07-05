@@ -107,7 +107,7 @@ commands =
 			-- set the user's channel prefix
 			local prefix
 			if isNewChannel -- first user in channel
-				channel.modes.o[user\fullhost!] = true
+				channel.modes.o[user] = true
 				prefix = "@"
 			else
 				prefix = ""
