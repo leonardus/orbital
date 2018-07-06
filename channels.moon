@@ -13,11 +13,11 @@ class Channel extends Entity
 			"b": {} -- ban
 			"e": {} -- exception
 			"I": {} -- invite-exception
-			"l": false -- client limit
-			"i": false -- invite-only
-			"k": false -- key
-			"m": false -- moderated
-			"s": false -- secret
+			"l": nil -- client limit
+			"i": nil -- invite-only
+			"k": nil -- key
+			"m": nil -- moderated
+			"s": nil -- secret
 			"t": true -- protected topic
 			"n": true -- no external messages
 			
