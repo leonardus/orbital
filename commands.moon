@@ -119,6 +119,7 @@ commands =
 
 				-- make sure mode exists before proceeding
 				unless channel.modeTypes[modeChar]
+					user\send numerics.ERR_UNKNOWNMODE user, modeChar
 					continue
 
 				modeType = channel.modeTypes[modeChar]
