@@ -1,7 +1,9 @@
+Entity = require "entity"
+
 module = {}
 module.activeChannels = {}
 
-class Channel
+class Channel extends Entity
 	new: (name) =>
 		@name = name
 		@topic = nil

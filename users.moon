@@ -1,8 +1,10 @@
+Entity = require "entity"
+
 module = {}
 module.connectedUsers = {}
 module.clients = {}
 
-class User
+class User extends Entity
 	new: (client) =>
 		@registered = false
 		@nick = nil
