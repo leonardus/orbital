@@ -8,6 +8,18 @@ class Channel extends Entity
 		@name = name
 		@topic = nil
 		@users = {}
+		@modeTypes = {
+			"b": "A" -- ban
+			"e": "A" -- exception
+			"I": "A" -- invite-exception
+			"k": "B" -- key
+			"l": "C" -- client limit
+			"i": "D" -- invite-only
+			"m": "D" -- moderated
+			"s": "D" -- secret
+			"t": "D" -- protected topic
+			"n": "D" -- no external messages
+		}
 		@modes = {
 			-- channel modes
 			"b": {} -- ban
