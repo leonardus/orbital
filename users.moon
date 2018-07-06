@@ -12,6 +12,7 @@ class User
 		@client = client
 		@channels = {}
 		@channelPrefixes = {}
+		@modes = {}
 	
 	send: (data) =>
 		if type(data) == "table"
