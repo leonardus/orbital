@@ -12,7 +12,7 @@ return class Entity
 		modes = "+"
 
 		for modeName, value in pairs @modes do
-			if value == true
+			if type(value) != "table"
 				modes ..= modeName
 
 		return modes
