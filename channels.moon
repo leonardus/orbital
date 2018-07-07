@@ -13,6 +13,8 @@ class Channel extends Entity
 			"e": "A" -- exception
 			"I": "A" -- invite-exception
 			"k": "B" -- key
+			"o": "B" -- operator
+			"v": "B" -- voice
 			"l": "C" -- client limit
 			"i": "D" -- invite-only
 			"m": "D" -- moderated
