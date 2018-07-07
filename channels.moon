@@ -37,8 +37,6 @@ class Channel extends Entity
 			"o": {} -- operator
 			"v": {} -- voice
 		}
-		@clientLimit = -1 -- +l
-		@key = "" -- +k
 
 	setTopic: (text) =>
 		@topic = text
