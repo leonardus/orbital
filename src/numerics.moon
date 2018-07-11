@@ -59,4 +59,6 @@ return {
 		":#{source} 462 #{user.clientText} :You may not reregister"
 	ERR_BANNEDFROMCHAN: (user, channel) ->
 		":#{source} 474 #{user.clientText} #{channel.name} :Cannot join channel (+b)"
+	ERR_USERSDONTMATCH: (user) ->
+		":#{source} 502 #{user.clientText} :Cannot change mode for other users"
 }

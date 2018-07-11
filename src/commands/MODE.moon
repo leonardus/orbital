@@ -105,7 +105,7 @@ return (line, user) ->
 		
 		-- users cannot set modes on other users
 		unless target\lower! == user.nick\lower!
-			user\send numerics.ERR_USERSDONTMATCH
+			user\send numerics.ERR_USERSDONTMATCH user
 			return
 
 		unless modestring
