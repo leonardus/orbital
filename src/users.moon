@@ -1,4 +1,5 @@
 Entity = require "entity"
+parse = require "ircserverparse"
 
 module = {}
 module.connectedUsers = {}
@@ -32,6 +33,11 @@ class User extends Entity
 			if channel.name\lower! == name\lower!
 				return true
 		return false
+
+	isInList: (list) =>
+		for hostmask, _ in pairs list do
+			if parse.matchesWithWildcard hostmask, @fullhost!
+				return true
 
 module.createUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
