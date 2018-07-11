@@ -38,6 +38,7 @@ class User extends Entity
 		for hostmask, _ in pairs list do
 			if parse.matchesWithWildcard hostmask, @fullhost!
 				return true
+		return false
 
 module.createUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
