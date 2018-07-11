@@ -22,6 +22,13 @@ return (line, user) ->
 			continue
 		
 		channel, isNewChannel = channels.getChannel requestedChannel
+
+		-- deny the user entry if they are banned
+		isBanned = user\isInList channel.modes.b
+		hasException = user\isInList channel.modes.e
+		if isBanned and not hasException
+			user\send numerics.ERR_BANNEDFROMCHAN user, channel
+			continue
 		
 		user.channels[channel.name] = channel
 		table.insert channel.users, user
