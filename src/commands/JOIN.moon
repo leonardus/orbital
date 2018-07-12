@@ -24,9 +24,7 @@ return (line, user) ->
 		channel, isNewChannel = channels.getChannel requestedChannel
 
 		-- deny the user entry if they are banned
-		isBanned = user\isInList channel.modes.b
-		hasException = user\isInList channel.modes.e
-		if isBanned and not hasException
+		if user\bannedInChannel channel
 			user\send numerics.ERR_BANNEDFROMCHAN user, channel
 			continue
 		

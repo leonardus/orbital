@@ -40,6 +40,11 @@ class User extends Entity
 				return true
 		return false
 
+	bannedInChannel: (channel) =>
+		isBanned = @isInList channel.modes.b
+		hasExcepti2on = @isInList channel.modes.e
+		return isBanned and not hasException
+
 module.createUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
 	module.connectedUsers["#{remoteAddress}/#{remotePort}"] = User client
