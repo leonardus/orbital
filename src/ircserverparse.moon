@@ -56,11 +56,6 @@ fullhostPattern = re.compile [[
 	{:host: {[^ ]+} :} |}
 ]]
 
-explodeCommas = re.compile [[
-	list <- {| arg (',' arg)* |}
-	arg <- {: [^ ,]+ :}
-]]
-
 parseModule.parseMessage = (line) ->
 	parsed = re.match line, messagePattern
 	return parsed
@@ -70,7 +65,21 @@ parseModule.parseFullhost = (line) ->
 	return parsed
 
 parseModule.explodeCommas = (line) ->
-	parsed = re.match line, explodeCommas
-	return parsed
+	list = {}
+	
+	current = ""
+	for i = 1, line\len! do
+		isEOL = (line\len! == i)
+		char = line\sub i,i
+
+		if char != ","
+			current ..= char
+
+		addToList = (char == ",") or isEOL
+		if addToList and current\len! > 0
+			table.insert list, current
+			current = ""
+
+	return list
 
 return parseModule
