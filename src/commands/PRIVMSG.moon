@@ -25,6 +25,10 @@ return (line, user) ->
 		user\send numerics.ERR_CANNOTSENDTOCHAN user, target
 		return
 
+	-- do not send the message if the user is banned
+	if target\sub(1,1) == "#" and user\bannedInChannel target
+		return
+
 	-- send the message
 	textToSend = ":#{user\fullhost!} PRIVMSG #{target} :#{message}"
 	if target\sub(1,1) == "#"
