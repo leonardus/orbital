@@ -57,6 +57,8 @@ return {
 		":#{source} 461 #{user.clientText} #{command} :Not enough parameters"
 	ERR_ALREADYREGISTERED: (user) ->
 		":#{source} 462 #{user.clientText} :You may not reregister"
+	ERR_CHANNELISFULL: (user, channel) ->
+		":#{source} 471 #{user.clientText} #{channel.name} :Cannot join channel (+l)"
 	ERR_INVITEONLYCHAN: (user, channel) ->
 		":#{source} 473 #{user.clientText} #{channel.name} :Cannot join channel (+i)"
 	ERR_BANNEDFROMCHAN: (user, channel) ->

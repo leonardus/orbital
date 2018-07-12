@@ -34,6 +34,11 @@ return (line, user) ->
 			user\send numerics.ERR_INVITEONLYCHAN user, channel
 			continue
 
+		-- check if channel limit has been reached
+		if channel.modes.l and #channel.users >= channel.modes.l
+			user\send numerics.ERR_CHANNELISFULL user, channel
+			continue
+		
 		user.channels[channel.name] = channel
 		table.insert channel.users, user
 		
