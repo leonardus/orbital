@@ -19,20 +19,21 @@ return (line, user) ->
 	unless channels.channelExists(target) or users.userFromNick(target)
 		user\send numerics.ERR_NOSUCHNICK user, target
 		return
-	
-	-- make sure the user is in the channel
-	if target\sub(1,1) == "#" and not user\isInChannel target
-		user\send numerics.ERR_CANNOTSENDTOCHAN user, target
-		return
-
-	-- do not send the message if the user is banned
-	if target\sub(1,1) == "#" and user\bannedInChannel target
-		return
 
 	-- send the message
 	textToSend = ":#{user\fullhost!} PRIVMSG #{target} :#{message}"
 	if target\sub(1,1) == "#"
 		channel = channels.getChannel target
+	
+		-- make sure the user is in the channel
+		if target\sub(1,1) == "#" and not user\isInChannel channel
+			user\send numerics.ERR_CANNOTSENDTOCHAN user, target
+			return
+
+		-- do not send the message if the user is banned
+		if target\sub(1,1) == "#" and user\bannedInChannel channel
+			return
+
 		for _, userInChannel in pairs channel.users do
 			if userInChannel != user
 				userInChannel\send textToSend
