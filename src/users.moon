@@ -28,9 +28,9 @@ class User extends Entity
 
 	fullhost: => "#{@nick}!~#{@username}@#{@hostname}"
 
-	isInChannel: (name) =>
-		for _, channel in pairs @channels do
-			if channel.name\lower! == name\lower!
+	isInChannel: (channel) =>
+		for _, userChannel in pairs @channels do
+			if userChannel.name\lower! == channel.name\lower!
 				return true
 		return false
 
