@@ -27,7 +27,13 @@ return (line, user) ->
 		if user\bannedInChannel channel
 			user\send numerics.ERR_BANNEDFROMCHAN user, channel
 			continue
-		
+
+		-- if the channel is +i, make sure the user is invited
+		isExcepted = user\isInList channel.modes.I
+		if channel.modes.i and not isExcepted
+			user\send numerics.ERR_INVITEONLYCHAN user, channel
+			continue
+
 		user.channels[channel.name] = channel
 		table.insert channel.users, user
 		
