@@ -49,7 +49,7 @@ return (line, user) ->
 			prefix = "@"
 		else
 			prefix = ""
-		user.channelPrefixes[requestedChannel] = prefix
+		user.channelPrefixes[channel] = prefix
 		
 		-- send the JOIN message to all the users in the channel
 		for _, channelUser in pairs channel.users do

@@ -45,6 +45,19 @@ class User extends Entity
 		hasExcepti2on = @isInList channel.modes.e
 		return isBanned and not hasException
 
+	updatePrefix: (channel) =>
+		hasOp = channel.modes.o[self]
+		hasVoice = channel.modes.v[self]
+
+		if hasOp
+			@channelPrefixes[channel] = "@"
+		elseif hasVoice
+			@channelPrefixes[channel] = "+"
+		else
+			@channelPrefixes[channel] = ""
+
+		print "set prefix for #{@nick} to #{@channelPrefixes[channel]}"
+
 module.createUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
 	module.connectedUsers["#{remoteAddress}/#{remotePort}"] = User client

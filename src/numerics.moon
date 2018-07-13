@@ -35,7 +35,7 @@ return {
 		--available = 510 - base\len!
 		
 		for _, userInChannel in pairs channel.users do
-			prefix = userInChannel.channelPrefixes[channel.name]
+			prefix = userInChannel.channelPrefixes[channel]
 			table.insert data, "#{base}#{prefix}#{userInChannel.nick}"
 		
 		data
@@ -55,6 +55,8 @@ return {
 		":#{source} 432 #{user.clientText} #{nick} :Erroneous nickname"
 	ERR_NICKNAMEINUSE: (user, nick) ->
 		":#{source} 433 #{user.clientText} #{nick} :Nickname is already in use"
+	ERR_USERNOTINCHANNEL: (user, nick, channel) ->
+		":#{source} 441 #{user.clientText} #{nick} #{channel.name} :They aren't on that channel"
 	ERR_NEEDMOREPARAMS: (user, command) ->
 		":#{source} 461 #{user.clientText} #{command} :Not enough parameters"
 	ERR_ALREADYREGISTERED: (user) ->

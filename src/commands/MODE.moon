@@ -80,9 +80,22 @@ return (line, user) ->
 					argToUse = modeArgs[modeArgsUsed]
 
 				switch modeChar
-					when "b", "e", "I", "v", "o"
+					when "b", "e", "I"
 						if argToUse
 							channel.modes[modeChar][argToUse] = applyAction action
+					when "v", "o"
+						nick = argToUse
+						targetUser = users.userFromNick nick
+						unless targetUser
+							user\send numerics.ERR_NOSUCHNICK user, nick
+							continue
+
+						unless targetUser\isInChannel channel
+							user\send numerics.ERR_USERNOTINCHANNEL user, nick, channel
+							continue
+
+						channel.modes[modeChar][targetUser] = applyAction action
+						targetUser\updatePrefix channel
 					when "k"
 						if argToUse
 							channel.modes[modeChar] = applyAction action, argToUse
