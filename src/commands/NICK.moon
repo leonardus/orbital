@@ -15,9 +15,10 @@ return (line, user) ->
 	-- check if the nickname is in use
 	nickInUse = false
 	for _, otherUser in pairs(users.connectedUsers) do
-		if otherUser ~= user and otherUser.nick\lower! == requestedNick\lower!
-			nickInUse = true
-			break
+		if otherUser ~= user and otherUser.nick
+			if otherUser.nick\lower! == requestedNick\lower!
+				nickInUse = true
+				break
 	if nickInUse then
 		user\send numerics.ERR_NICKNAMEINUSE user, requestedNick
 		return
