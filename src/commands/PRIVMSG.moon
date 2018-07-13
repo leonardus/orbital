@@ -27,7 +27,7 @@ return (line, user) ->
 	
 		-- make sure the user is in the channel
 		unless user\isInChannel channel
-			user\send numerics.ERR_CANNOTSENDTOCHAN user, target
+			user\send numerics.ERR_CANNOTSENDTOCHAN user, channel
 			return
 
 		-- do not send the message if the user is banned

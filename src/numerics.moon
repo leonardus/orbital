@@ -43,6 +43,8 @@ return {
 		":#{source} 401 #{user.clientText} #{nick} :No such nick/channel"
 	ERR_NOSUCHCHANNEL: (user, channel) ->
 		":#{source} 403 #{user.clientText} #{channel} :No such channel"
+	ERR_CANNOTSENDTOCHAN: (user, channel) ->
+		":#{source} 404 #{user.clientText} #{channel.name} :Cannot send to channel"
 	ERR_INVALIDCAPCMD: (command) ->
 		":#{source} 410 * #{command} :Invalid CAP command"
 	ERR_NOMOTD: (user) ->
