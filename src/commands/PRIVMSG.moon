@@ -34,6 +34,14 @@ return (line, user) ->
 		if user\bannedInChannel channel
 			return
 
+		-- deny message if channel is +m and user is not +v/o
+		ops = channel.modes.o
+		voiced = channel.modes.v
+		userHasPermission = ops[user] or voiced[user]
+		if channel.modes.m and not userHasPermission
+			user\send numerics.ERR_CANNOTSENDTOCHAN user, channel
+			return
+
 		for _, userInChannel in pairs channel.users do
 			if userInChannel != user
 				userInChannel\send textToSend
