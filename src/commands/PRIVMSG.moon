@@ -26,12 +26,12 @@ return (line, user) ->
 		channel = channels.getChannel target
 	
 		-- make sure the user is in the channel
-		if target\sub(1,1) == "#" and not user\isInChannel channel
+		unless user\isInChannel channel
 			user\send numerics.ERR_CANNOTSENDTOCHAN user, target
 			return
 
 		-- do not send the message if the user is banned
-		if target\sub(1,1) == "#" and user\bannedInChannel channel
+		if user\bannedInChannel channel
 			return
 
 		for _, userInChannel in pairs channel.users do
