@@ -3,6 +3,12 @@ numerics = require "numerics"
 users = require "users"
 channels = require "channels"
 
+applyAction = (action, positive=true) ->
+	if action == "+"
+		return positive
+	else
+		return nil
+
 return (line, user) ->
 	unless #line.args >= 1
 		user\send numerics.ERR_NEEDMOREPARAMS user, "MODE"
@@ -76,16 +82,10 @@ return (line, user) ->
 				switch modeChar
 					when "b", "e", "I", "v", "o"
 						if argToUse
-							if action == "+"
-								channel.modes[modeChar][argToUse] = true
-							else
-								channel.modes[modeChar][argToUse] = nil
+							channel.modes[modeChar][argToUse] = applyAction action
 					when "k"
 						if argToUse
-							if action == "+"
-								channel.modes[modeChar] = argToUse
-							else
-								channel.modes[modeChar] = nil
+							channel.modes[modeChar] = applyAction action, argToUse
 					when "l"
 						if action == "+"
 							if argToUse
@@ -93,10 +93,7 @@ return (line, user) ->
 						else
 							channel.modes[modeChar] = nil
 					when "i", "m", "s", "t", "n"
-						if action == "+"
-							channel.modes[modeChar] = true
-						else
-							channel.modes[modeChar] = nil
+						channel.modes[modeChar] = applyAction action
 
 	else -- target is a nick
 		unless users.userFromNick target
