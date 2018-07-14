@@ -56,6 +56,10 @@ class Channel extends Entity
 			if channelUser == user
 				@users[k] = nil
 
+		-- unset +v,+o
+		@modes.v[user] = nil
+		@modes.o[user] = nil
+
 		-- delete the channel if it is empty
 		if #@users < 1
 			@destroy!
