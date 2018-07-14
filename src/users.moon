@@ -56,8 +56,6 @@ class User extends Entity
 		else
 			@channelPrefixes[channel] = ""
 
-		print "set prefix for #{@nick} to #{@channelPrefixes[channel]}"
-
 module.createUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
 	module.connectedUsers["#{remoteAddress}/#{remotePort}"] = User client
