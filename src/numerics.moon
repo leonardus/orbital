@@ -67,6 +67,8 @@ return {
 		":#{source} 473 #{user.clientText} #{channel.name} :Cannot join channel (+i)"
 	ERR_BANNEDFROMCHAN: (user, channel) ->
 		":#{source} 474 #{user.clientText} #{channel.name} :Cannot join channel (+b)"
+	ERR_BADCHANNELKEY: (user, channel) ->
+		":#{source} 475 #{user.clientText} #{channel.name} :Cannot join channel (+k)"
 	ERR_USERSDONTMATCH: (user) ->
 		":#{source} 502 #{user.clientText} :Cannot change mode for other users"
 }

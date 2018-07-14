@@ -9,6 +9,11 @@ return (line, user) ->
 		return
 	
 	channelList = parse.explodeCommas(line.args[1])
+	
+	keysUsed = 0
+	local keys
+	if line.args[2]
+		keys = parse.explodeCommas(line.args[2])
 
 	for _, requestedChannel in ipairs channelList do
 		-- if the user is already in the channel, do nothing
@@ -22,6 +27,18 @@ return (line, user) ->
 			continue
 		
 		channel, isNewChannel = channels.getChannel requestedChannel
+
+		-- make sure the user has provided the correct key
+		if channel.modes.k
+			keysUsed += 1
+
+			local keyToUse
+			if keys
+				keyToUse = keys[keysUsed]
+			
+			if (not keyToUse) or (keyToUse != channel.modes.k)
+				user\send numerics.ERR_BADCHANNELKEY user, channel
+				continue
 
 		-- deny the user entry if they are banned
 		if user\bannedInChannel channel
