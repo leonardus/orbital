@@ -30,7 +30,7 @@ return (line, user) ->
 
 	if target\sub(1,1) == "#"
 		unless channels.channelExists target
-			user\send numerics.ERR_NOSUCHCHANNEL
+			user\send numerics.ERR_NOSUCHCHANNEL user, target
 			return
 
 		channel = channels.getChannel target
