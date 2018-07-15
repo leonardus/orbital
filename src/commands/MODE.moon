@@ -114,6 +114,9 @@ return (line, user) ->
 
 				switch modeChar
 					when "b", "e", "I"
+						alreadySet = channel.modes[modeChar][argToUse] == applyAction action
+						continue if alreadySet
+
 						channel.modes[modeChar][argToUse] = applyAction action
 						table.insert modesSet[action], {char: modeChar, arg: argToUse}
 					when "v", "o"
@@ -127,20 +130,35 @@ return (line, user) ->
 							user\send numerics.ERR_USERNOTINCHANNEL user, nick, channel
 							continue
 
+						alreadySet = channel.modes[modeChar][targetUser] == applyAction action
+						continue if alreadySet
+
 						channel.modes[modeChar][targetUser] = applyAction action
 						targetUser\updatePrefix channel
 						table.insert modesSet[action], {char: modeChar, arg: targetUser.nick}
 					when "k"
+						alreadySet = channel.modes[modeChar] == applyAction action, argToUse
+						continue if alreadySet
+
 						channel.modes[modeChar] = applyAction action, argToUse
 						table.insert modesSet[action], {char: modeChar}
 					when "l"
 						if action == "+"
+							alreadySet = channel.modes[modeChar] == tonumber argToUse
+							continue if alreadySet
+
 							channel.modes[modeChar] = tonumber argToUse
 							table.insert modesSet[action], {char: modeChar, arg: argToUse}
 						else
+							alreadySet = channel.modes[modeChar] == nil
+							continue if alreadySet
+
 							channel.modes[modeChar] = nil
 							table.insert modesSet[action], {char: modeChar}
 					when "i", "m", "s", "t", "n"
+						alreadySet = channel.modes[modeChar] == applyAction action
+						continue if alreadySet
+
 						channel.modes[modeChar] = applyAction action
 						table.insert modesSet[action], {char: modeChar}
 		
