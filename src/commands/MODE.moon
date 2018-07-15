@@ -114,9 +114,8 @@ return (line, user) ->
 
 				switch modeChar
 					when "b", "e", "I"
-						if argToUse
-							channel.modes[modeChar][argToUse] = applyAction action
-							table.insert modesSet[action], {char: modeChar, arg: argToUse}
+						channel.modes[modeChar][argToUse] = applyAction action
+						table.insert modesSet[action], {char: modeChar, arg: argToUse}
 					when "v", "o"
 						nick = argToUse
 						targetUser = users.userFromNick nick
@@ -132,14 +131,12 @@ return (line, user) ->
 						targetUser\updatePrefix channel
 						table.insert modesSet[action], {char: modeChar, arg: targetUser.nick}
 					when "k"
-						if argToUse
-							channel.modes[modeChar] = applyAction action, argToUse
-							table.insert modesSet[action], {char: modeChar}
+						channel.modes[modeChar] = applyAction action, argToUse
+						table.insert modesSet[action], {char: modeChar}
 					when "l"
 						if action == "+"
-							if argToUse
-								channel.modes[modeChar] = tonumber argToUse
-								table.insert modesSet[action], {char: modeChar, arg: argToUse}
+							channel.modes[modeChar] = tonumber argToUse
+							table.insert modesSet[action], {char: modeChar, arg: argToUse}
 						else
 							channel.modes[modeChar] = nil
 							table.insert modesSet[action], {char: modeChar}
