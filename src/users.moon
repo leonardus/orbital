@@ -17,7 +17,7 @@ class User extends Entity
 		@channelPrefixes = {}
 		@validModes = {"i": true, "o": true, "r": true}
 		@modes = {
-			"i": nil
+			"i": true
 			"o": nil
 			"r": nil
 		}
