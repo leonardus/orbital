@@ -26,7 +26,7 @@ return (line, user) ->
 		channel = channels.getChannel target
 	
 		-- make sure the user is in the channel
-		unless user\isInChannel channel
+		unless user\isInChannel(channel) or channel.modes.n
 			user\send numerics.ERR_CANNOTSENDTOCHAN user, channel
 			return
 
