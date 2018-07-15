@@ -15,7 +15,12 @@ class User extends Entity
 		@client = client
 		@channels = {}
 		@channelPrefixes = {}
-		@modes = {}
+		@validModes = {"i": true, "o": true, "r": true}
+		@modes = {
+			"i": nil
+			"o": nil
+			"r": nil
+		}
 	
 	send: (data) =>
 		if type(data) == "table"

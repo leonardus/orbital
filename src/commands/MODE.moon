@@ -119,5 +119,21 @@ return (line, user) ->
 			return
 
 		unless modestring
-			user\send numerics.UMODEIS user
+			user\send numerics.RPL_UMODEIS user
 			return
+
+		for i = 1, modestring\len! do -- go through each mode character given
+			modeChar = modestring\sub i,i
+
+			if modeChar == "+" or modeChar == "-"
+				action = modeChar
+				continue
+
+			-- make sure mode exists before proceeding
+			unless user.validModes[modeChar]
+				user\send numerics.ERR_UNKNOWNMODE user, modeChar
+				continue
+
+			switch modeChar
+				when "i"
+					user.modes[modeChar] = applyAction action
