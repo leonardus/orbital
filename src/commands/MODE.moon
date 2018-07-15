@@ -3,6 +3,34 @@ numerics = require "numerics"
 users = require "users"
 channels = require "channels"
 
+buildAction = (modes) ->
+	responseModes = ""
+	responseArgs = ""
+	for _, mode in pairs modes do
+		responseModes ..= mode.char
+		if mode.arg
+			responseArgs ..= mode.arg
+	return responseModes, responseArgs
+
+buildResponse = (modesSet, target) ->
+	modeResponse = "MODE #{target} "
+	responseArgs = " "
+	if #modesSet["+"] > 0
+		modeResponse ..= "+"
+		concatResponse, concatArgs = buildAction modesSet["+"]
+		modeResponse ..= concatResponse
+		responseArgs ..= concatArgs
+	if #modesSet["-"] > 0
+		modeResponse ..= "-"
+		concatResponse, concatArgs = buildAction modesSet["-"]
+		modeResponse ..= concatResponse
+		responseArgs ..= concatArgs
+
+	if responseArgs\len! > 1
+		modeResponse ..= responseArgs
+
+	return modeResponse
+
 applyAction = (action, positive=true) ->
 	if action == "+"
 		return positive
@@ -16,6 +44,11 @@ return (line, user) ->
 
 	target = line.args[1]
 	modestring = line.args[2]
+
+	modesSet = {
+		"+": {}
+		"-": {}
+	}
 
 	-- gather list of mode arguments if supplied
 	modeArgsUsed = 0
@@ -83,6 +116,7 @@ return (line, user) ->
 					when "b", "e", "I"
 						if argToUse
 							channel.modes[modeChar][argToUse] = applyAction action
+							table.insert modesSet[action], {char: modeChar, arg: argToUse}
 					when "v", "o"
 						nick = argToUse
 						targetUser = users.userFromNick nick
@@ -96,18 +130,27 @@ return (line, user) ->
 
 						channel.modes[modeChar][targetUser] = applyAction action
 						targetUser\updatePrefix channel
+						table.insert modesSet[action], {char: modeChar, arg: targetUser.nick}
 					when "k"
 						if argToUse
 							channel.modes[modeChar] = applyAction action, argToUse
+							table.insert modesSet[action], {char: modeChar}
 					when "l"
 						if action == "+"
 							if argToUse
 								channel.modes[modeChar] = tonumber argToUse
+								table.insert modesSet[action], {char: modeChar, arg: argToUse}
 						else
 							channel.modes[modeChar] = nil
+							table.insert modesSet[action], {char: modeChar}
 					when "i", "m", "s", "t", "n"
 						channel.modes[modeChar] = applyAction action
-
+						table.insert modesSet[action], {char: modeChar}
+		
+		if (#modesSet["+"] > 0) or (#modesSet["-"] > 0)
+			modeResponse = buildResponse modesSet, target
+			channel\sendAll ":#{user\fullhost!} #{modeResponse}"
+	
 	else -- target is a nick
 		unless users.userFromNick target
 			user\send numerics.ERR_NOSUCHNICK
@@ -137,3 +180,8 @@ return (line, user) ->
 			switch modeChar
 				when "i"
 					user.modes[modeChar] = applyAction action
+					table.insert modesSet[action], {char: modeChar}
+		
+		if (#modesSet["+"] > 0) or (#modesSet["-"] > 0)
+			modeResponse = buildResponse modesSet, target
+			user\send ":#{user\fullhost!} #{modeResponse}"
