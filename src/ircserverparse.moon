@@ -45,7 +45,7 @@ messagePattern = re.compile [[
 	command <- {:command: [A-Za-z]+ :}
 	numeric <- {:numeric: %d^+3^-4 :} -- at most four digits, at least three
 	
-	arg <- ':' {.+} / {%S+}
+	arg <- ':' {.*} / {%S+}
 	sp <- %s
 ]]
 
