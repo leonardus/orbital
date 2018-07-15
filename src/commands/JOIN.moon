@@ -73,8 +73,8 @@ return (line, user) ->
 			channelUser\send ":#{user\fullhost!} JOIN #{requestedChannel}"
 			
 		-- send the channel topic
-		if channel.topic
-			user\send numerics.RPL_TOPIC user, channel
+		if channel.topic\len! > 0
+			channel\sendTopic user, true
 			
 		-- send NAMES reply
 		user\send numerics.RPL_NAMREPLY user, channel

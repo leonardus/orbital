@@ -1,4 +1,5 @@
 Entity = require "entity"
+numerics = require "numerics"
 
 module = {}
 module.activeChannels = {}
@@ -6,7 +7,9 @@ module.activeChannels = {}
 class Channel extends Entity
 	new: (name) =>
 		@name = name
-		@topic = nil
+		@topic = ""
+		@topicFullhost = nil
+		@topicTime = nil
 		@users = {}
 		@modeTypes = {
 			"b": "A" -- ban
@@ -40,9 +43,6 @@ class Channel extends Entity
 			"v": {} -- voice
 		}
 
-	setTopic: (text) =>
-		@topic = text
-
 	sendAll: (text) =>
 		for _, channelUser in pairs @users do
 			channelUser\send text
@@ -66,6 +66,13 @@ class Channel extends Entity
 	
 	destroy: =>
 		module.activeChannels[@name] = nil
+
+	sendTopic: (user) =>
+		if @topic\len! == 0
+			user\send numerics.RPL_NOTOPIC user, self
+		else
+			user\send numerics.RPL_TOPIC user, self
+			user\send numerics.RPL_TOPICWHOTIME user, self
 
 module.getChannel = (name) ->
 	name = name\lower!

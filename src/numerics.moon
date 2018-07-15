@@ -28,8 +28,14 @@ return {
 		":#{source} 221 #{user.clientText} #{user\getModes!}"	
 	RPL_CHANNELMODEIS: (user, channel) ->
 		":#{source} 324 #{user.clientText} #{channel.name} #{channel\getModes!}"
+	RPL_NOTOPIC: (user, channel) ->
+		":#{source} 331 #{user.clientText} #{channel.name} :No topic is set"
 	RPL_TOPIC: (user, channel) ->
 		":#{source} 332 #{user.clientText} #{channel.name} :#{channel.topic}"
+	RPL_TOPICWHOTIME: (user, channel) ->
+		topFullhost = channel.topicFullhost
+		topTime = tostring channel.topicTime
+		":#{source} 333 #{user.clientText} #{channel.name} #{topFullhost} #{topTime}"
 	RPL_NAMREPLY: (user, channel) ->
 		-- TODO: multiple users per line
 		data = {}

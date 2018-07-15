@@ -12,6 +12,7 @@ commands =
 	"JOIN": require "commands.JOIN"
 	"PART": require "commands.PART"
 	"PRIVMSG": require "commands.PRIVMSG"
+	"TOPIC": require "commands.TOPIC"
 
 return (user, line) ->
 	command = line.command or line.numeric
