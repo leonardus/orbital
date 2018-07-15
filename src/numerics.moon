@@ -71,6 +71,8 @@ return {
 		":#{source} 474 #{user.clientText} #{channel.name} :Cannot join channel (+b)"
 	ERR_BADCHANNELKEY: (user, channel) ->
 		":#{source} 475 #{user.clientText} #{channel.name} :Cannot join channel (+k)"
+	ERR_CHANOPRIVISNEEDED: (user, channel) ->
+		":#{source} 482 #{user.clientText} #{channel.name} :You're not channel operator"
 	ERR_USERSDONTMATCH: (user) ->
 		":#{source} 502 #{user.clientText} :Cannot change mode for other users"
 }
