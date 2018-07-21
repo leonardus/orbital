@@ -1,4 +1,5 @@
 Entity = require "entity"
+socket = require "socket"
 parse = require "ircserverparse"
 
 module = {}
@@ -21,6 +22,8 @@ class User extends Entity
 			"o": nil
 			"r": nil
 		}
+		@lastMessageTime = socket.gettime!
+		@pingSent = false
 	
 	send: (data) =>
 		if type(data) == "table"
