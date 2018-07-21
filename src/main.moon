@@ -41,7 +41,7 @@ ping = coroutine.create ->
 	lastCheck = socket.gettime!
 	while true
 		timePassed = socket.gettime! - lastCheck
-		if timePassed >= 1
+		if timePassed >= config.pingPollRate
 			lastCheck = socket.gettime!
 			for _, user in pairs users.connectedUsers do
 				timeSinceLastMessage = socket.gettime! - user.lastMessageTime
