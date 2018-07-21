@@ -39,10 +39,10 @@ clientReadable = (client) ->
 
 ping = coroutine.create ->
 	lastCheck = socket.gettime!
-    while true
-        timePassed = socket.gettime! - last
-        if timePassed >= 1
-			last = socket.gettime!
+	while true
+		timePassed = socket.gettime! - lastCheck
+		if timePassed >= 1
+			lastCheck = socket.gettime!
 			for _, user in pairs users.connectedUsers do
 				timeSinceLastMessage = socket.gettime! - user.lastMessageTime
 				if timeSinceLastMessage > config.pingTimeout
