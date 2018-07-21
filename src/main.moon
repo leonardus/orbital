@@ -17,15 +17,16 @@ serverReadable = ->
 		table.insert clients, newClient
 		
 clientReadable = (client) ->
-	data = client\receive "*l"
-	
-	print "<- #{data}"
+	data, error = client\receive "*l"
 
-	if data == nil
+	if error
+		print "Terminated #{client\getpeername!}: #{error}"
 		-- Terminate the connection
 		users.removeUser client
 		table.remove clients, clients[client]
 		return
+	
+	print "<- #{data}"
 		
 	line = parse.parseMessage data
 	if line
