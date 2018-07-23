@@ -8,6 +8,7 @@ module.clients = {}
 
 class User extends Entity
 	new: (client) =>
+		@isService = false
 		@registered = false
 		@nick = nil
 		@username = nil
@@ -64,10 +65,12 @@ class User extends Entity
 		else
 			@channelPrefixes[channel] = ""
 
+module.userClass = User
+
 module.createUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
 	module.connectedUsers["#{remoteAddress}/#{remotePort}"] = User client
-	
+
 module.getUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
 	return module.connectedUsers["#{remoteAddress}/#{remotePort}"]

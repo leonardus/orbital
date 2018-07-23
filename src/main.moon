@@ -44,6 +44,9 @@ ping = coroutine.create ->
 		if timePassed >= config.pingPollRate
 			lastCheck = socket.gettime!
 			for _, user in pairs users.connectedUsers do
+				if user.isService -- don't ping services
+					continue
+				
 				timeSinceLastMessage = socket.gettime! - user.lastMessageTime
 				if timeSinceLastMessage > config.pingTimeout
 					users.removeUser user.client
