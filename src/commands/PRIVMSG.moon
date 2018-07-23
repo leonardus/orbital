@@ -46,5 +46,5 @@ return (line, user) ->
 			if userInChannel != user
 				userInChannel\send textToSend
 	else
-		user = users.userFromNick target
-		user\send textToSend
+		targetUser = users.userFromNick target
+		targetUser\send textToSend
