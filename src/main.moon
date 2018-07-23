@@ -19,13 +19,7 @@ serverReadable = ->
 		
 clientReadable = (client) ->
 	data, error = client\receive "*l"
-
-	if error
-		print "Terminated #{client\getpeername!}: #{error}"
-		-- Terminate the connection
-		users.removeUser client
-		table.remove clients, clients[client]
-		return
+	return if error
 	
 	print "<- #{data}"
 		
@@ -49,7 +43,9 @@ ping = coroutine.create ->
 				
 				timeSinceLastMessage = socket.gettime! - user.lastMessageTime
 				if timeSinceLastMessage > config.pingTimeout
-					users.removeUser user.client
+					roundedTimeout = math.floor(timeSinceLastMessage + 0.5)
+					quitMessage = "Ping timeout: #{roundedTimeout} seconds"
+					users.removeUser user.client, quitMessage
 					table.remove clients, clients[user.client]
 				elseif (timeSinceLastMessage > config.pingTimeout/2) and not user.pingSent
 					user\send ":#{config.source} PING"

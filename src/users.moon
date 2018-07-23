@@ -80,8 +80,22 @@ module.userFromNick = (nick) ->
 		if user.nick\lower! == nick\lower!
 			return user
 	return nil
-	
-module.removeUser = (client) ->
+
+module.removeUser = (client, message) ->
+	user = module.getUser client
+	if user
+		quitMessage = ":#{user\fullhost!} QUIT"
+		if message
+			quitMessage ..= " :#{message}"
+
+		-- send QUIT message
+		user\send quitMessage
+		user\send "ERROR"
+		for _, channel in pairs user.channels do
+			for _, channelUser in pairs channel.users do
+				if channelUser != user
+					channelUser\send quitMessage
+
 	remoteAddress, remotePort = client\getpeername!
 	module.connectedUsers["#{remoteAddress}/#{remotePort}"].client\close!
 	module.connectedUsers["#{remoteAddress}/#{remotePort}"] = nil

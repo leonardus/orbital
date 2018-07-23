@@ -13,6 +13,7 @@ commands =
 	"PART": require "commands.PART"
 	"PRIVMSG": require "commands.PRIVMSG"
 	"TOPIC": require "commands.TOPIC"
+	"QUIT": require "commands.QUIT"
 
 return (user, line) ->
 	command = line.command or line.numeric
