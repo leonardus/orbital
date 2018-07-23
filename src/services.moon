@@ -21,7 +21,7 @@ class Service extends User
 		else
 			@handler data
 
-module.createService = (name, handler)
+module.createService = (name, handler) ->
 	service = Service name, handler
 	table.insert users.connectedUsers, service
 	return service
