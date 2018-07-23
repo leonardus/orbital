@@ -49,6 +49,13 @@ messagePattern = re.compile [[
 	sp <- %s
 ]]
 
+serviceCommandPattern = re.compile [[
+	line <- {| command {:args: {| (sp arg)* |} :} |}
+	command <- {:command: [A-Za-z]+ :}
+	arg <- ':' {.*} / {%S+}
+	sp <- %s
+]]
+
 fullhostPattern = re.compile [[
 	fullhost <- {|
 	{:nick: {[^ !]+} :} '!'
@@ -58,6 +65,10 @@ fullhostPattern = re.compile [[
 
 parseModule.parseMessage = (line) ->
 	parsed = re.match line, messagePattern
+	return parsed
+
+parseModule.parseServiceCommand = (line) ->
+	parsed = re.match line, serviceCommandPattern
 	return parsed
 
 parseModule.parseFullhost = (line) ->
