@@ -17,9 +17,9 @@ class Service extends User
 	send: (data) =>
 		if type(data) == "table"
 			for _, segment in ipairs data do
-				handler segment
+				@handler segment
 		else
-			handler data
+			@handler data
 
 module.createService = (name, handler)
 	service = Service name, handler
