@@ -65,4 +65,7 @@ listen = coroutine.create ->
 		else
 			coroutine.resume ping
 
-coroutine.resume listen
+success, errorMessage = coroutine.resume listen
+
+unless success
+	error errorMessage
