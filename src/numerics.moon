@@ -23,7 +23,8 @@ return {
 		version = config.version
 		":#{source} 004 #{user.clientText} #{servername} #{version} #{usermodes} #{channelmodes}"
 	RPL_ISUPPORT: (user) ->
-		":#{source} 005 #{user.clientText} CASEMAPPING=ascii CHANLIMIT=#: CHANNELLEN=50 CHANTYPES=# ELIST=MU HOSTLEN=64 KICKLEN=255 MAXLIST=b:127 NICKLEN=20 PREFIX=(ov)@+ STATUSMSG=@+ TOPICLEN=255 USERLEN=20 :are supported by this server"
+		HOSTLEN = config.maxHostnameLen
+		":#{source} 005 #{user.clientText} CASEMAPPING=ascii CHANLIMIT=#: CHANNELLEN=50 CHANTYPES=# ELIST=MU HOSTLEN=#{HOSTLEN} KICKLEN=255 MAXLIST=b:127 NICKLEN=20 PREFIX=(ov)@+ STATUSMSG=@+ TOPICLEN=255 USERLEN=20 :are supported by this server"
 	RPL_UMODEIS: (user) ->
 		":#{source} 221 #{user.clientText} #{user\getModes!}"	
 	RPL_CHANNELMODEIS: (user, channel) ->

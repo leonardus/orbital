@@ -1,11 +1,15 @@
 numerics = require "numerics"
 socket = require "socket"
+config = require "config"
 
 return (user) ->
 	-- set the user's hostname
 	ip = user.client\getpeername!
 	hostname = socket.dns.tohostname(ip)
-	user.hostname = hostname or ip -- rDNS, ip as fallback
+	if hostname and (hostname\len! <= config.maxHostnameLen)
+		user.hostname = hostname
+	else
+		user.hostname = ip
 
 	user.registered = true
 

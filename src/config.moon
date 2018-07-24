@@ -10,6 +10,7 @@ return {
 	
 	nickPattern: "[A-Za-z0-9_\-`]+" -- uppercase, lowercase, brackets, underscores, hyphens, backticks
 	maxUsernameLen: 20
+	maxHostnameLen: 64
 
 	pingTimeout: 120 -- 2 minutes
 	pingPollRate: 5 -- every 5 seconds
