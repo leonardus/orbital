@@ -17,8 +17,8 @@ return {
 		time = os.date config.timeFormat, public.created
 		":#{source} 003 #{user.clientText} :This server was created #{date} at #{time}"
 	RPL_MYINFO: (user) ->
-		usermodes = "o"
-		channelmodes = "i"
+		usermodes = "ior"
+		channelmodes = "beIlikmstn"
 		servername = config.serverName
 		version = config.version
 		":#{source} 004 #{user.clientText} #{servername} #{version} #{usermodes} #{channelmodes}"
