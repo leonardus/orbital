@@ -14,6 +14,7 @@ commands =
 	"PRIVMSG": require "commands.PRIVMSG"
 	"TOPIC": require "commands.TOPIC"
 	"QUIT": require "commands.QUIT"
+	"NAMES": require "commands.NAMES"
 
 return (user, line) ->
 	command = line.command or line.numeric
