@@ -1,4 +1,3 @@
-package.path = "../?.lua;#{package.path}"
 numerics = require "numerics"
 
 return (line, user) -> -- needs to be implemented

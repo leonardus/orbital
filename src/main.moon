@@ -1,3 +1,5 @@
+package.path = "./?.lua;#{package.path}"
+
 socket = require "socket"
 parse = require "ircserverparse"
 users = require "users"
@@ -40,7 +42,7 @@ ping = coroutine.create ->
 			for _, user in pairs users.connectedUsers do
 				if user.isService -- don't ping services
 					continue
-				
+
 				timeSinceLastMessage = socket.gettime! - user.lastMessageTime
 				if timeSinceLastMessage > config.pingTimeout
 					roundedTimeout = math.floor(timeSinceLastMessage + 0.5)

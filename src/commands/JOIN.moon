@@ -1,4 +1,3 @@
-package.path = "../?.lua;#{package.path}"
 numerics = require "numerics"
 channels = require "channels"
 parse = require "ircserverparse"

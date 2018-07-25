@@ -1,4 +1,3 @@
-package.path = "../?.lua;#{package.path}"
 config = require "config"
 numerics = require "numerics"
 completeRegistration = require "completeRegistration"

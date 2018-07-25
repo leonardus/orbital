@@ -1,4 +1,3 @@
-package.path = "../?.lua;#{package.path}"
 users = require "users"
 channels = require "channels"
 numerics = require "numerics"
