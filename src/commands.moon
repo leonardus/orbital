@@ -19,5 +19,6 @@ commands =
 
 return (user, line) ->
 	command = line.command or line.numeric
+	command = command\upper!
 	if commands[command]
 		commands[command] line, user
