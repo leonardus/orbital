@@ -68,6 +68,8 @@ return {
 		":#{source} 441 #{user.clientText} #{nick} #{channel.name} :They aren't on that channel"
 	ERR_NOTONCHANNEL: (user, channel) ->
 		":#{source} 442 #{user.clientText} #{channel.name} :You're not on that channel"
+	ERR_NOTREGISTERED: (user) ->
+		":#{source} 451 #{user.clientText} :You have not registered"
 	ERR_NEEDMOREPARAMS: (user, command) ->
 		":#{source} 461 #{user.clientText} #{command} :Not enough parameters"
 	ERR_ALREADYREGISTERED: (user) ->
