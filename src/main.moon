@@ -26,7 +26,7 @@ clientReadable = (client) ->
 	line = parse.parseMessage data
 	if line
 		if line.command or line.numeric
-			user = users.getUser(client)
+			user = users.userFromClient(client)
 			user.lastMessageTime = socket.gettime!
 			user.pingSent = false
 			commands user, line

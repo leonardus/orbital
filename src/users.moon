@@ -71,7 +71,7 @@ module.createUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
 	module.connectedUsers["#{remoteAddress}/#{remotePort}"] = User client
 
-module.getUser = (client) ->
+module.userFromClient = (client) ->
 	remoteAddress, remotePort = client\getpeername!
 	return module.connectedUsers["#{remoteAddress}/#{remotePort}"]
 	
@@ -82,7 +82,7 @@ module.userFromNick = (nick) ->
 	return nil
 
 module.removeUser = (client, message) ->
-	user = module.getUser client
+	user = module.userFromClient client
 	if user
 		quitMessage = ":#{user\fullhost!} QUIT"
 		if message
