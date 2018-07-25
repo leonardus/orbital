@@ -15,6 +15,7 @@ commands =
 	"TOPIC": require "commands.TOPIC"
 	"QUIT": require "commands.QUIT"
 	"NAMES": require "commands.NAMES"
+	"KICK": require "commands.KICK"
 
 return (user, line) ->
 	command = line.command or line.numeric
