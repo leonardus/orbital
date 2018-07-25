@@ -68,4 +68,6 @@ listen = coroutine.create ->
 success, errorMessage = coroutine.resume listen
 
 unless success
-	error errorMessage
+	print "Something happened! #{errorMessage}"
+	print debug.traceback(listen)
+	print "Please report this error along with the traceback."
