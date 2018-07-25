@@ -15,6 +15,7 @@ return (line, user) ->
 	-- channel must exist
 	unless channels.channelExists channelName
 		user\send numerics.ERR_NOSUCHCHANNEL user, channelName
+		return
 
 	channel = channels.getChannel channelName
 
