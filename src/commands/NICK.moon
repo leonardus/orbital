@@ -28,8 +28,19 @@ return (line, user) ->
 	if invalidChars or tooLong
 		user\send numerics.ERR_ERRONEOUSNICKNAME user, requestedNick
 		return
+
+	-- send the NICK message
+	nickMessage = ":#{user\fullhost!} NICK #{requestedNick}"
+	user\send nickMessage
+	for _, channel in pairs user.channels do
+		for _, channelUser in pairs channel.users do
+			if channelUser != user
+				channelUser\send nickMessage
 		
+	-- set the nickname
 	user.nick = requestedNick
 	user.clientText = requestedNick
+
+	-- complete registration
 	if user.username and not user.registered
 		completeRegistration user
