@@ -48,6 +48,12 @@ return {
 			table.insert data, "#{base}#{prefix}#{userInChannel.nick}"
 		
 		data
+	RPL_MOTD: (user, line) ->
+		": 372 #{user.clientText} :#{line}"
+	RPL_MOTDSTART: (user) ->
+		": 375 #{user.clientText} :- #{config.serverName} Message of the day - "
+	RPL_ENDOFMOTD: (user) ->
+		": 376 #{user.clientText} :End of /MOTD command."
 	ERR_NOSUCHNICK: (user, nick) ->
 		": 401 #{user.clientText} #{nick} :No such nick/channel"
 	ERR_NOSUCHCHANNEL: (user, channel) ->

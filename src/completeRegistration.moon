@@ -18,4 +18,4 @@ return (user) ->
 	user\send numerics.RPL_CREATED user
 	user\send numerics.RPL_MYINFO user
 	user\send numerics.RPL_ISUPPORT user
-	user\send numerics.ERR_NOMOTD user
+	user\sendMOTD!

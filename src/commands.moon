@@ -19,6 +19,7 @@ commands =
 	"NAMES": require "commands.NAMES"
 	"KICK": require "commands.KICK"
 	"PING": require "commands.PING"
+	"MOTD": require "commands.MOTD"
 
 return (user, line) ->
 	command = line.command or line.numeric

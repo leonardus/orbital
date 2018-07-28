@@ -1,6 +1,8 @@
 Entity = require "entity"
 socket = require "socket"
 parse = require "ircserverparse"
+motd = require "motdModule"
+numerics = require "numerics"
 
 module = {}
 module.connectedUsers = {}
@@ -34,6 +36,16 @@ class User extends Entity
 		else
 			@client\send "#{data}\r\n"
 			print "-> #{data}"
+
+	sendMOTD: =>
+		unless motd.MOTD
+			@send numerics.ERR_NOMOTD self
+			return
+
+		@send numerics.RPL_MOTDSTART self
+		for _, line in ipairs motd.MOTD do
+			@send numerics.RPL_MOTD self, line
+		@send numerics.RPL_ENDOFMOTD self
 
 	fullhost: => "#{@nick}!~#{@username}@#{@hostname}"
 

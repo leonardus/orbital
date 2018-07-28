@@ -6,7 +6,9 @@ users = require "users"
 commands = require "commands"
 public = require "public"
 config = require "config"
+motd = require "motdModule"
 
+motd.loadMotd!
 public.created = os.time!
 
 clients = {}

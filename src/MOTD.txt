@@ -1,0 +1,2 @@
+This is the default MOTD for orbital.
+Change it by editing MOTD.txt.
