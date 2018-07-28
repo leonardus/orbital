@@ -10,7 +10,7 @@ config = require "config"
 public.created = os.time!
 
 clients = {}
-server = socket.bind "localhost", 6667
+server = socket.bind "localhost", config.port
 table.insert clients, server
 
 serverReadable = ->

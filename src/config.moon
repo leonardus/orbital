@@ -4,6 +4,7 @@ version: "orbital-pre"
 serverName: "localnet"
 source: "localhost"
 networkName: "localnet"
+port: 6667
 
 dateFormat: "%Y-%m-%d"
 timeFormat: "%H:%M:%S"
