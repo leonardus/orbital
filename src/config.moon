@@ -2,7 +2,6 @@
 version: "orbital-pre"
 
 serverName: "localnet"
-source: "localhost"
 networkName: "localnet"
 port: 6667
 

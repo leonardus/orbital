@@ -50,7 +50,7 @@ ping = coroutine.create ->
 					users.removeUser user.client, quitMessage
 					table.remove clients, clients[user.client]
 				elseif (timeSinceLastMessage > config.pingTimeout/2) and not user.pingSent
-					user\send ":#{config.source} PING"
+					user\send ": PING"
 					user.pingSent = true
 		else
 			coroutine.yield!
