@@ -23,7 +23,9 @@ return (line, user) ->
 		return
 		
 	-- check if nickname is valid
-	if (requestedNick\match config.nickPattern) != requestedNick
+	invalidChars = (requestedNick\match config.nickPattern) != requestedNick
+	tooLong = requestedNick\len! > config.maxNicknameLen
+	if invalidChars or tooLong
 		user\send numerics.ERR_ERRONEOUSNICKNAME user, requestedNick
 		return
 		
