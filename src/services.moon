@@ -6,7 +6,7 @@ module = {}
 
 class Service extends User
 	new: (name, handler) =>
-		super\new!
+		super!
 		@isService = true
 		@handler = handler
 		@registered = true
