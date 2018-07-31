@@ -15,4 +15,7 @@ maxHostnameLen: 64
 
 pingTimeout: 120 -- 2 minutes
 pingPollRate: 5 -- every 5 seconds
+
+enabledServices:
+	"NickServ": true
 }

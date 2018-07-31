@@ -7,9 +7,16 @@ commands = require "commands"
 public = require "public"
 config = require "config"
 motd = require "motdModule"
+services = require "services"
 
 motd.loadMotd!
 public.created = os.time!
+
+-- load services
+for name, enabled in pairs config.enabledServices do
+	if enabled
+		loader = require "services.#{name}.service"
+		loader!
 
 clients = {}
 server = socket.bind "localhost", config.port
