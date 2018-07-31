@@ -46,4 +46,12 @@ return (line, user) ->
 				userInChannel\send textToSend
 	else
 		targetUser = users.userFromNick target
-		targetUser\send textToSend
+
+		if targetUser.isService
+			data = {
+				query: message
+				user: user
+			}
+			targetUser\send data
+		else
+			targetUser\send textToSend
