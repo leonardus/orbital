@@ -3,10 +3,11 @@ Orbital promotes the decentralizaton of IRC by making it easy to run and maintai
 
 ## Installation
 ### Ubuntu
-1. Install git and luarocks: `sudo apt install git luarocks`
+1. Install git, luarocks, and sqlite3 development files: `sudo apt install git luarocks libsqlite3-dev`
 2. Install MoonScript: `sudo luarocks install moonscript` or `luarocks install moonscript --local`
-3. Download Orbital: `git clone https://github.com/leonardus/orbital.git`
-4. Run Orbital: `cd orbital/src && moon main.moon`
+3. Install lsqlite3: `sudo luarocks install lsqlite3` or `luarocks install lsqlite3 --local`
+4. Download Orbital: `git clone https://github.com/leonardus/orbital.git`
+5. Run Orbital: `cd orbital/src && moon main.moon`
 
 ## Support
 **IRC**: `#orbital` @ `chat.freenode.net`
