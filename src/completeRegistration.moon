@@ -1,6 +1,7 @@
 numerics = require "numerics"
 socket = require "socket"
 config = require "config"
+motd = require "motdModule"
 
 return (user) ->
 	-- set the user's hostname
@@ -18,4 +19,4 @@ return (user) ->
 	user\send numerics.RPL_CREATED user
 	user\send numerics.RPL_MYINFO user
 	user\send numerics.RPL_ISUPPORT user
-	user\sendMOTD!
+	motd.sendMOTD user

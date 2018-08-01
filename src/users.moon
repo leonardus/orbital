@@ -37,16 +37,6 @@ class User extends Entity
 			@client\send "#{data}\r\n"
 			print "-> #{data}"
 
-	sendMOTD: =>
-		unless motd.MOTD
-			@send numerics.ERR_NOMOTD self
-			return
-
-		@send numerics.RPL_MOTDSTART self
-		for _, line in ipairs motd.MOTD do
-			@send numerics.RPL_MOTD self, line
-		@send numerics.RPL_ENDOFMOTD self
-
 	fullhost: => "#{@nick}!~#{@username}@#{@hostname}"
 
 	isInChannel: (channel) =>

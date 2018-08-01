@@ -1,2 +1,4 @@
+motd = require "motdModule"
+
 return (line, user) ->
-	user\sendMOTD!
+	motd.sendMOTD user
