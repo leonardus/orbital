@@ -61,7 +61,7 @@ ping = coroutine.create ->
 				if timeSinceLastMessage > config.pingTimeout
 					roundedTimeout = math.floor(timeSinceLastMessage + 0.5)
 					quitMessage = "Ping timeout: #{roundedTimeout} seconds"
-					users.removeUser user.client, quitMessage
+					user\remove quitMessage
 					table.remove clients, clients[user.client]
 				elseif (timeSinceLastMessage > config.pingTimeout/2) and not user.pingSent
 					user\send ": PING"

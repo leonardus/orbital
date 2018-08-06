@@ -27,6 +27,10 @@ class User extends Entity
 		}
 		@lastMessageTime = socket.gettime!
 		@pingSent = false
+
+		if @client
+			remoteAddress, remotePort = @client\getpeername!
+			@fullpeername = "#{remoteAddress}/#{remotePort}"
 	
 	send: (data) =>
 		if type(data) == "table"
@@ -66,6 +70,23 @@ class User extends Entity
 			@channelPrefixes[channel] = "+"
 		else
 			@channelPrefixes[channel] = ""
+		
+	remove: (message) =>
+		quitMessage = ":#{@fullhost!} QUIT"
+		if message
+			quitMessage ..= " :#{message}"
+
+		-- send QUIT message
+		usersNotified = {}
+		for _, channel in pairs @channels do
+			for _, channelUser in pairs channel.users do
+				unless usersNotified[channelUser]
+					channelUser\send quitMessage
+					usersNotified[channelUser] = true
+		@send "ERROR"
+
+		@client\close!
+		module.connectedUsers[@fullpeername] = nil
 
 module.userClass = User
 
@@ -82,24 +103,5 @@ module.userFromNick = (nick) ->
 		if user.nick\lower! == nick\lower!
 			return user
 	return nil
-
-module.removeUser = (client, message) ->
-	user = module.userFromClient client
-	if user
-		quitMessage = ":#{user\fullhost!} QUIT"
-		if message
-			quitMessage ..= " :#{message}"
-
-		-- send QUIT message
-		user\send quitMessage
-		user\send "ERROR"
-		for _, channel in pairs user.channels do
-			for _, channelUser in pairs channel.users do
-				if channelUser != user
-					channelUser\send quitMessage
-
-	remoteAddress, remotePort = client\getpeername!
-	module.connectedUsers["#{remoteAddress}/#{remotePort}"].client\close!
-	module.connectedUsers["#{remoteAddress}/#{remotePort}"] = nil
 	
 return module
