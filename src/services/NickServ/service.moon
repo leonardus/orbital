@@ -19,7 +19,7 @@ handler = (service, query, user) ->
 
 loader = ->
 	filename = "NickServ.sqlite"
-	db, errorCode, errorMessage = sqlite3.open "./db/NickServ.sqlite"
+	db, errorCode, errorMessage = sqlite3.open "../db/#{filename}"
 	unless db
 		error "Could not open database #{filename} (error #{errorCode}): #{errorMessage}"
 

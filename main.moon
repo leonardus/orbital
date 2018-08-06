@@ -1,4 +1,5 @@
-package.path = "./?.lua;#{package.path}"
+require "moonscript"
+package.path = "./src/?.lua;#{package.path}"
 
 socket = require "socket"
 parse = require "ircserverparse"
