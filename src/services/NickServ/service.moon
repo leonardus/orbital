@@ -1,8 +1,13 @@
 services = require "services"
 sqlite3 = require "lsqlite3"
+fmt = require "formatting"
 
 local db
-commands = {}
+commands =
+	HELP: (service, query, user) ->
+			service\dispatchMessage user, "NickServ allows users to register nicknames."
+			service\dispatchMessage user, "Commands:"
+			service\dispatchMessage user, "#{fmt.B}HELP#{fmt.B}: Displays this message."
 
 handler = (service, query, user) ->
 	unless query.command
