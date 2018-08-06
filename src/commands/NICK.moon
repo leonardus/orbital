@@ -31,12 +31,12 @@ return (line, user) ->
 
 	-- send the NICK message
 	nickMessage = ":#{user\fullhost!} NICK #{requestedNick}"
-	if user.registered
-		user\send nickMessage
+	usersNotified = {}
 	for _, channel in pairs user.channels do
 		for _, channelUser in pairs channel.users do
-			if channelUser != user
+			unless usersNotified[channelUser]
 				channelUser\send nickMessage
+				usersNotified[channelUser] = true
 		
 	-- set the nickname
 	user.nick = requestedNick
