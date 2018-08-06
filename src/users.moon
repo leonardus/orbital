@@ -57,7 +57,7 @@ class User extends Entity
 
 	bannedInChannel: (channel) =>
 		isBanned = @isInList channel.modes.b
-		hasExcepti2on = @isInList channel.modes.e
+		hasException = @isInList channel.modes.e
 		return isBanned and not hasException
 
 	updatePrefix: (channel) =>
