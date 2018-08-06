@@ -13,14 +13,19 @@ motd.loadMotd!
 public.created = os.time!
 
 -- load services
+print "Loading services"
 for name, enabled in pairs config.enabledServices do
 	if enabled
 		loader = require "services.#{name}.service"
 		loader!
 
 clients = {}
+
+print "Starting server"
 server = socket.bind "localhost", config.port
 table.insert clients, server
+
+print "Server started on localhost (port #{config.port})"
 
 serverReadable = ->
 	newClient = server\accept!

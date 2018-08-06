@@ -26,6 +26,7 @@ class Service extends User
 module.createService = (name, handler) ->
 	service = Service name, handler
 	table.insert users.connectedUsers, service
+	print "* Created service \"#{name}\""
 	return service
 
 return module
