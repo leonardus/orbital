@@ -1,6 +1,7 @@
 services = require "services"
 sqlite3 = require "lsqlite3"
 fmt = require "formatting"
+dbutils = require "dbutils"
 
 local db
 commands =
@@ -22,6 +23,15 @@ loader = ->
 	db, errorCode, errorMessage = sqlite3.open "../db/#{filename}"
 	unless db
 		error "Could not open database #{filename} (error #{errorCode}): #{errorMessage}"
+
+	tableInit = [[
+		CREATE TABLE IF NOT EXISTS NickServ (
+			username TEXT COLLATE NOCASE,
+			password TEXT,
+			activated INTEGER
+		);
+	]]
+	dbutils.exec db, tableInit
 
 	services.createService "NickServ", handler
 
