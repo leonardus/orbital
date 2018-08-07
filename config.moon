@@ -8,7 +8,7 @@ port: 6667
 dateFormat: "%Y-%m-%d"
 timeFormat: "%H:%M:%S"
 
-nickPattern: "[A-Za-z0-9_`-]+" -- uppercase, lowercase, brackets, underscores, backticks, hyphens
+nickPattern: "[A-Za-z0-9_%-`]+" -- uppercase, lowercase, brackets, underscores, backticks, hyphens
 maxUsernameLen: 9
 maxNicknameLen: 20
 maxHostnameLen: 64
