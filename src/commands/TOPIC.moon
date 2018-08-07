@@ -24,7 +24,7 @@ return (line, user) ->
 	if newTopic
 		-- user must be op or channel must be -t
 		if channel.modes.t and not channel.modes.o[user]
-			user\send numerics.CHANOPRIVISNEEDED user, channel
+			user\send numerics.ERR_CHANOPRIVISNEEDED user, channel
 			return
 
 		-- set the topic
