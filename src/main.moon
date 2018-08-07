@@ -13,12 +13,13 @@ services = require "services"
 motd.loadMotd!
 public.created = os.time!
 
--- load services
-print "Loading services"
-for name, enabled in pairs config.enabledServices do
+-- load modules
+print "Loading modules"
+for name, enabled in pairs config.enabledModules do
 	if enabled
-		loader = require "services.#{name}.service"
+		loader = require "modules.#{name}"
 		loader!
+		print "* Successfully loaded module \"#{name}\""
 
 clients = {}
 
