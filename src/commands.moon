@@ -3,6 +3,7 @@ channels = require "channels"
 numerics = require "numerics"
 config = require "config"
 parse = require "ircserverparse"
+services = require "services"
 
 registrationCommands = {"NICK": true, "USER": true, "CAP": true, "QUIT": true}
 
@@ -31,3 +32,7 @@ return (user, line) ->
 
 	if commands[command]
 		commands[command] line, user
+		services.pushCommand {
+			:line
+			:user
+		}

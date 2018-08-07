@@ -3,6 +3,7 @@ parse = require "ircserverparse"
 User = users.userClass
 
 module = {}
+hooks = {}
 
 class Service extends User
 	new: (name, handler) =>
@@ -28,5 +29,19 @@ module.createService = (name, handler) ->
 	table.insert users.connectedUsers, service
 	print "* Created service \"#{name}\""
 	return service
+
+module.hookCommand = (name, handler) ->
+	name = name\upper!
+	exists = hooks[name]
+	unless exists
+		hooks[name] = {}
+	
+	table.insert hooks[name], handler
+
+module.pushCommand = (data) ->
+	command = data.line.command\upper!
+	if hooks[command]
+		for _, handler in pairs hooks[command] do
+			handler data
 
 return module
