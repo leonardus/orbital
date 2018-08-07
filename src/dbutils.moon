@@ -19,6 +19,11 @@ dbutils.exec_safe = (db, q, nametable) ->
 	if (res != sqlite3.DONE) and (res != sqlite3.ROW)
 		error "Could not execute SQL query \"#{q}\" (step): #{res}"
 
+	if res == sqlite3.ROW
+		cols = statement\columns!
+		statement\finalize!
+		return cols
+
 	statement\finalize!
 
 return dbutils
