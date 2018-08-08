@@ -5,6 +5,8 @@ completeRegistration = require "completeRegistration"
 
 return (line, user) ->
 	requestedNick = line.args[1]
+	if requestedNick == user.nick
+		return
 	
 	-- check if a nickname is given
 	unless requestedNick
