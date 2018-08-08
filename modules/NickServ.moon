@@ -50,6 +50,32 @@ commands =
 
 		service\dispatchMessage user, "Your account has been created."
 
+	IDENTIFY: (service, query, user) ->
+		local username, password
+		if query.args[2]
+			username = query.args[1]
+			password = query.args[2]
+		elseif query.args[1]
+			username = user.nick
+			password = query.args[1]
+		else
+			service\dispatchMessage user, "Usage: /msg NickServ IDENTIFY [username] <password>"
+			return
+
+		nsUserQ = "SELECT * FROM NickServ WHERE username=:username"
+		nsUserNt = username: user.nick
+		nsUser = dbutils.exec_safe db, nsUserQ, nsUserNt, 1
+
+		if (not nsUser) or (not argon2.verify nsUser.password, password)
+			service\dispatchMessage user, "Username and password do not match."
+			return
+		user.NickServ.identified = true
+		user.NickServ.account = nsUser
+		loginMessage = "You have been logged in as #{fmt.B}#{nsUser.username}#{fmt.B}."
+		service\dispatchMessage user, loginMessage
+		if nsUser.activated == 0
+			service\dispatchMessage user, "Notice: Your account is not yet activated."
+
 handler = (service, query, user) ->
 	unless query.command
 		return
