@@ -21,7 +21,7 @@ class Service extends User
 		@handler queryParsed, data.user
 
 	dispatchMessage: (user, message) =>
-		user\send ":#{@fullhost!} PRIVMSG #{user.nick} :#{message}"
+		user\send ":#{@fullhost!} NOTICE #{user.nick} :#{message}"
 
 module.createService = (name, handler) ->
 	service = Service name, handler
