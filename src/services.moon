@@ -12,7 +12,7 @@ class Service extends User
 		@registered = true
 		@nick = name
 		@username = name
-		@hostname = "services."
+		@cloak = "services."
 		@modes.r = true
 
 	send: (data) =>

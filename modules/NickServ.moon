@@ -5,6 +5,7 @@ dbutils = require "dbutils"
 argon2 = require "argon2"
 modutils = require "modutils"
 users = require "users"
+config = require "config"
 
 math.randomseed os.time!
 saltRange = {min: 33, max: 126}
@@ -80,6 +81,69 @@ commands =
 		if nsUser.activated == 0
 			service\dispatchMessage user, "Notice: Your account is not yet activated."
 
+		-- apply cloak
+		cloak = user.NickServ.account.cloak
+		if cloak and user.NickServ.account.cloak_enabled
+			user\applyCloak cloak
+	
+	CLOAK: (service, query, user) ->
+		targetNick = query.args[1]
+		action = query.args[2]
+		newCloak = query.args[3]
+		
+		unless user.NickServ.identified
+			service\dispatchMessage user, "You must be identified to run this command."
+			return
+
+		unless user.NickServ.account.admin == 1
+			service\dispatchMessage user, "You must be an administrator to run this command."
+			return
+		
+		usageMessage = "Usage: /msg NickServ CLOAK <target> <ON/OFF> [cloak]"
+		unless targetNick and action
+			service\dispatchMessage user, usageMessage
+			return
+
+		actionCaps = action\upper!
+		targetUser = users.userFromNick targetNick
+		unless targetUser and targetUser.NickServ.identified
+			service\dispatchMessage "That user is not currently identified to NickServ."
+			return
+		if actionCaps == "OFF"
+			disableCloakQ = "UPDATE NickServ SET cloak_enabled=0 WHERE username=:username"
+			disableCloakNt = {username:targetNick}
+			dbutils.exec_safe db, disableCloakQ, disableCloakNt
+			targetUser\applyCloak nil
+			targetUser.NickServ.account = getDbUser targetNick
+			service\dispatchMessage user, "Disabled cloak for user #{targetNick}."
+		elseif actionCaps == "ON"
+			-- set the cloak in the NickServ database
+			if newCloak
+				if newCloak\len! > config.maxHostnameLen
+					service\dispatchMessage user, "Cloak exceeds maximum hostname length, ignoring."
+					return
+				
+				setCloakQ = "UPDATE NickServ SET cloak=:cloak WHERE username=:username"
+				setCloakNt = {cloak:newCloak, username:targetNick}
+				dbutils.exec_safe db, setCloakQ, setCloakNt
+			elseif targetUser.NickServ.cloak == nil
+				service\dispatchMessage "That user does not have a cloak set."
+				return
+
+			-- flag the new cloak as enabled
+			enableCloakQ = "UPDATE NickServ SET cloak_enabled=1 WHERE username=:username"
+			enableCloakNt = {username:targetNick}
+			dbutils.exec_safe db, enableCloakQ, enableCloakNt
+			
+			-- apply the new cloak
+			oldHost = targetUser.cloak or targetUser.hostname
+			targetUser\applyCloak newCloak
+			targetUser.NickServ.account = getDbUser targetNick
+			cloakSetMsg = "Updated hostname of #{targetNick} from #{oldHost} to #{newCloak}"
+			service\dispatchMessage user, cloakSetMsg
+		else
+			service\dispatchMessage user, "Unknown action: \"#{action}\""
+
 handler = (service, query, user) ->
 	unless query.command
 		return
@@ -104,7 +168,10 @@ loader = ->
 		CREATE TABLE IF NOT EXISTS NickServ (
 			username TEXT COLLATE NOCASE,
 			password TEXT,
-			activated INTEGER
+			activated INTEGER,
+			cloak TEXT,
+			cloak_enabled INTEGER,
+			admin INTEGER
 		);
 	]]
 	dbutils.exec db, tableInit

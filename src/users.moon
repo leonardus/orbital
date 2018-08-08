@@ -16,6 +16,7 @@ class User extends Entity
 		@nick = nil
 		@username = nil
 		@hostname = ""
+		@cloak = nil
 		@clientText = "*" -- "<client>" text given to the numeric
 		@client = client
 		@channels = {}
@@ -42,7 +43,7 @@ class User extends Entity
 			@client\send "#{data}\r\n"
 			print "-> #{data}"
 
-	fullhost: => "#{@nick}!~#{@username}@#{@hostname}"
+	fullhost: => "#{@nick}!~#{@username}@#{(@cloak or @hostname)}"
 
 	isInChannel: (channel) =>
 		for _, userChannel in pairs @channels do
@@ -90,6 +91,21 @@ class User extends Entity
 
 		@client\close!
 		module.connectedUsers[@fullpeername] = nil
+
+	applyCloak: (cloak) =>
+		quitMessage = ":#{@fullhost!} QUIT :Changing hostname"
+		@cloak = cloak
+
+		-- send QUIT+JOIN messages
+		usersNotified = {}
+		usersNotified[self] = true
+		for _, channel in pairs @channels do
+			for _, channelUser in pairs channel.users do
+				unless usersNotified[channelUser]
+					channelUser\send quitMessage
+					usersNotified[channelUser] = true
+				if channelUser != self
+					channelUser\send ":#{@fullhost!} JOIN #{channel.name}"
 
 module.userClass = User
 
