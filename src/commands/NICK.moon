@@ -34,6 +34,8 @@ return (line, user) ->
 	-- send the NICK message
 	nickMessage = ":#{user\fullhost!} NICK #{requestedNick}"
 	usersNotified = {}
+	user\send nickMessage
+	usersNotified[user] = true
 	for _, channel in pairs user.channels do
 		for _, channelUser in pairs channel.users do
 			unless usersNotified[channelUser]

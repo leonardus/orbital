@@ -78,6 +78,8 @@ class User extends Entity
 
 		-- send QUIT message
 		usersNotified = {}
+		@send quitMessage
+		usersNotified[self] = true
 		for _, channel in pairs @channels do
 			for _, channelUser in pairs channel.users do
 				unless usersNotified[channelUser]
