@@ -15,6 +15,12 @@ genSalt = (len) ->
 	return salt
 
 local db
+getDbUser = (username) ->
+		nsUserQ = "SELECT * FROM NickServ WHERE username=:username"
+		nsUserNt = {:username}
+		nsUser = dbutils.exec_safe db, nsUserQ, nsUserNt, 1
+		return nsUser
+
 commands =
 	HELP: (service, query, user) ->
 			service\dispatchMessage user, "NickServ allows users to register nicknames."
@@ -62,9 +68,7 @@ commands =
 			service\dispatchMessage user, "Usage: /msg NickServ IDENTIFY [username] <password>"
 			return
 
-		nsUserQ = "SELECT * FROM NickServ WHERE username=:username"
-		nsUserNt = username: user.nick
-		nsUser = dbutils.exec_safe db, nsUserQ, nsUserNt, 1
+		nsUser = getDbUser user.nick
 
 		if (not nsUser) or (not argon2.verify nsUser.password, password)
 			service\dispatchMessage user, "Username and password do not match."
