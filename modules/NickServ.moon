@@ -29,8 +29,8 @@ commands =
 
 		userExistsQ = "SELECT 1 FROM NickServ WHERE username=:username"
 		userExistsNt = username: user.nick
-		userExists = dbutils.exec_safe db, userExistsQ, userExistsNt
-		if userExists == 1
+		userExists = dbutils.exec_safe db, userExistsQ, userExistsNt, 1
+		if userExists
 			service\dispatchMessage user, "An account already exists with that nickname."
 			return
 

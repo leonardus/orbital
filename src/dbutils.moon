@@ -6,7 +6,7 @@ dbutils.exec = (db, q) ->
 	unless res == sqlite3.OK
 		error "Could not execute SQL query \"#{q}\": #{res}"
 
-dbutils.exec_safe = (db, q, nametable) ->
+dbutils.exec_safe = (db, q, nametable, limit) ->
 	statement, errcode = db\prepare q
 
 	unless statement
@@ -15,15 +15,23 @@ dbutils.exec_safe = (db, q, nametable) ->
 	if nametable
 		statement\bind_names nametable
 	
-	res = statement\step!
-	if (res != sqlite3.DONE) and (res != sqlite3.ROW)
-		error "Could not execute SQL query \"#{q}\" (step): #{res}"
-
-	if res == sqlite3.ROW
-		cols = statement\columns!
-		statement\finalize!
-		return cols
+	res = {}
+	i = 0
+	for dbRow in statement\nrows! do
+		if i == limit
+			break
+		row = {}
+		for k,v in pairs dbRow do
+			row[k] = v
+		table.insert res, row
+		i+=1
 
 	statement\finalize!
+	if #res == 0
+		return nil
+	if limit == 1
+		return res[1]
+	else
+		return res
 
 return dbutils
