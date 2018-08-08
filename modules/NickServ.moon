@@ -3,6 +3,8 @@ sqlite3 = require "lsqlite3"
 fmt = require "formatting"
 dbutils = require "dbutils"
 argon2 = require "argon2"
+modutils = require "modutils"
+users = require "users"
 
 math.randomseed os.time!
 saltRange = {min: 33, max: 126}
@@ -56,7 +58,13 @@ handler = (service, query, user) ->
 	if commands[command]
 		commands[command] service, query, user, db
 
+userInit = (user) ->
+	user.NickServ =
+		identified: false
+
 loader = ->
+	modutils.hookAction "newUser", userInit
+
 	filename = "NickServ.sqlite"
 	db, errorCode, errorMessage = sqlite3.open "../db/#{filename}"
 	unless db

@@ -3,6 +3,7 @@ socket = require "socket"
 parse = require "ircserverparse"
 motd = require "motdModule"
 numerics = require "numerics"
+modutils = require "modutils"
 
 module = {}
 module.connectedUsers = {}
@@ -94,7 +95,9 @@ module.userClass = User
 
 module.createUser = (client) ->
 	remoteAddress, remotePort = client\getpeername!
-	module.connectedUsers["#{remoteAddress}/#{remotePort}"] = User client
+	newUser = User client
+	module.connectedUsers["#{remoteAddress}/#{remotePort}"] = newUser
+	modutils.pushAction "newUser", newUser
 
 module.userFromClient = (client) ->
 	remoteAddress, remotePort = client\getpeername!
