@@ -8,7 +8,7 @@ Orbital promotes the decentralizaton of IRC by making it easy to run and maintai
 	* `luarocks install moonscript --local`
 	* `luarocks install lsqlite3 --local`
 	* `luarocks install argon2-ffi --local`
-3. Download Orbital: `git clone https://github.com/leonardus//orbital.git`
+3. Download Orbital: `git clone https://github.com/leonardus/orbital.git`
 4. Run Orbital: `bash orbital/orbital.sh`
 
 ## Support
