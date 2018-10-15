@@ -17,5 +17,5 @@ pingTimeout: 120 -- 2 minutes
 pingPollRate: 5 -- every 5 seconds
 
 enabledModules:
-	"NickServ": true
+	"NickServ": false
 }
